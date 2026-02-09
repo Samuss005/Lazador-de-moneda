@@ -1,56 +1,52 @@
-const imagen = document.getElementById("imagenMoneda")
-const textoJuego = document.getElementById("textoJuego")
-const eleccion = document.getElementById("eleccion")
-const botonJugar = document.getElementById("botonJugar")
+        let referenciaIntervalo
 
-let intervalMoneda;
-let tiempoTotal;
+        function lanzarMoneda() {
+            // 0.- Leer el enunciado
+            // 1.- Lanzar el Interval (animacion)
+            // 2.- Lanzar el Timeout (parar animacion)
+            // 3.- Mostrar texto de jugando...
+            // 4.- Deshabilitar el botón de lanzar hasta que termina
+            // 5.- Deshabilitar la opción de elegir
+            const maximo = 15000
+            const minimo = 10000
+            const duracionTimoutMilisegundos = Math.floor(Math.random() * (maximo - minimo + 1)) + minimo
+            const tiempoAnimacionMilisegundos = 200
+            animacionMoneda()
+            referenciaIntervalo = setInterval(animacionMoneda, tiempoAnimacionMilisegundos)
+            setTimeout(pararAnimacion, duracionTimoutMilisegundos)
+            document.getElementById("salidaTexto").innerHTML = "Jugando..."
+            document.getElementById("botonJugar").disabled = true
+            document.getElementById("opcion").disabled = true
+        }
 
-botonJugar.addEventListener("click", iniciarJuego)
+        function animacionMoneda() {
+            // 1.- Mostrar cara
+            // 2.- Mostrar cruz en la siguiente iteración
+            // 3.- Mostrar cara en la siguiente iteración
+            // 4.- Por lo tanto, ir intercambiando entre cara o cruz
+            const imagen = document.getElementById("imagen")
+            const imgSeleccionada = imagen.src.includes("cara") ? "Assets/cruz.jpg" : "Assets/cara.jpg"
+            imagen.src = imgSeleccionada
+        }
 
-function iniciarJuego() {
-    if (eleccion.value === "") {
-        textoJuego.textContent = "Debes elegir cara o cruz"
-        return;
-    }
+        function pararAnimacion() {
+            // 1.- Parar el Interval (animacion)
+            // 2.- Calcular el resultado (aleatorio + opcion)
+            clearInterval(referenciaIntervalo)
+            calcularResultado()
+        }
 
-    botonJugar.disabled = true;
-    textoJuego.textContent = "Lanzando la moneda..."
-
-    // Tiempo aleatorio entre 1000 y 2000 ms
-    tiempoTotal = Math.floor(Math.random() * 1000) + 1000
-
-    // Alternar imágenes cada 200 ms
-    intervalMoneda = setInterval(alternarMoneda, 200)
-
-    // Finalizar el juego
-    setTimeout(finalizarJuego, tiempoTotal)
-}
-
-function alternarMoneda() {
-    if (imagen.src.includes("cara")) {
-        imagen.src = "Assets/cara.jpg"
-    } else {
-        imagen.src = "Assets/cruz.jpeg"
-    }
-}
-
-function finalizarJuego() {
-    clearInterval(intervalMoneda)
-
-    const resultadoFinal = Math.random() < 0.5 ? "cara" : "cruz"
-
-    if (resultadoFinal === "cara") {
-        imagen.src = "Assets/cara.jpg"
-    } else {
-        imagen.src = "Assets/cruz.jpeg"
-    }
-
-    if (resultadoFinal === eleccion.value) {
-        textoJuego.textContent = "¡Ganaste! Salió " + resultadoFinal
-    } else {
-        textoJuego.textContent = "Perdiste. Salió " + resultadoFinal
-    }
-
-    botonJugar.disabled = false
-}
+        function calcularResultado() {
+            // 1.- Un aleatorio de cara o cruz
+            // 2.- Comparar con eleccion del jugador
+            // 3.- Mostrar el resultado
+            // 4.- Habilitar botón para volver a jugar
+            // 5.- Habilitar la opción
+            const resultado = Math.random() < 0.5 ? "cara" : "cruz"
+            const opcionJugador = document.getElementById("opcion")
+            opcionJugador.disabled = false
+            document.getElementById("imagen").src = "Assets/" + resultado + ".jpg"
+            const salidaTexto = document.getElementById("salidaTexto")
+            salidaTexto.innerHTML = resultado === opcionJugador.value ? "Has ganado !" : "Has perdido... bobo"
+            document.getElementById("botonJugar").disabled = false
+        }

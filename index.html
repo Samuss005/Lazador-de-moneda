@@ -2,43 +2,34 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Juego Cara o Cruz</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lanzar la moneda</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-    <header>
-        <h1>Juego: Cara o Cruz</h1>
-    </header>
-
-    <main>
-        <section class="juego">
-
-            <p id="textoJuego">Elige cara o cruz y pulsa jugar</p>
-
-            
-                <img id="imagenMoneda" src="Assets/pregunta.jpg" alt="moneda">
-            
-
-            <section class="controles">
-                <label for="eleccion">Tu elección:</label>
-
-                <select id="eleccion">
-                    <option value="">-- Elige opción --</option>
-                    <option value="cara">Cara</option>
-                    <option value="cruz">Cruz</option>
-                </select>
-
-                <button id="botonJugar">Jugar</button>
-            </section>
-
-        </section>
-    </main>
-
-    <footer>
-        <small>Samuele Isidoro Moccia 1ºDAM</small>
-    </footer>
-
+    <h1>Lanzar la moneda</h1>
+    <img id="imagen" style="max-width: 20%;" src="Assets/pregunta.jpg" alt="interrogante" />
+    <select id="opcion">
+        <option value="cara">Cara</option>
+        <option value="cruz">Cruz</option>
+    </select>
+    <p id="salidaTexto">Lanza la moneda!</p>
+    <input id="botonJugar" type="button" value="Lanzar" onclick="lanzarMoneda()" />
+    <table>
+        <thead>
+            <th colspan="2">Puntuacion</th>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Ganadas</td>
+                <td>0</td>
+            </tr>
+            <tr>
+                <td>Perdidas</td>
+                <td>0</td>
+            </tr>
+        </tbody>
+    </table>
     <script src="script.js"></script>
 </body>
 </html>
